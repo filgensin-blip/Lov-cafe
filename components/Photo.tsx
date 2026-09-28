@@ -26,6 +26,7 @@ export function Photo({
   labelPosition,
   imgClassName = "",
   fallback = "placeholder",
+  hover = true,
 }: {
   slot: PhotoSlot;
   className?: string;
@@ -36,6 +37,8 @@ export function Photo({
   imgClassName?: string;
   /** "none" renders nothing when the file is missing (for decorative backdrops). */
   fallback?: "placeholder" | "none";
+  /** Slow zoom on hover. Off for backdrops (hero, tea field). */
+  hover?: boolean;
 }) {
   if (!hasPhoto(slot)) {
     if (fallback === "none") return null;
@@ -44,7 +47,7 @@ export function Photo({
   // next/image `fill` needs a positioned parent; keep a caller's absolute/fixed.
   const position = /\b(absolute|fixed)\b/.test(className) ? "" : "relative";
   return (
-    <div className={`${position} overflow-hidden bg-cream-2 ${className}`}>
+    <div className={`${position} overflow-hidden bg-cream-2 ${hover ? "photo-frame" : ""} ${className}`}>
       <Image
         src={slot.src}
         alt={slot.alt}

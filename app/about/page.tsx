@@ -57,8 +57,8 @@ export default function AboutPage() {
       <section className="bg-cream-2 py-24 md:py-32">
         <ul className="container-page grid gap-12 md:grid-cols-3 md:gap-10">
           {values.map((v, i) => (
-            <FadeIn as="li" key={v.title} delay={i * 100}>
-              <span aria-hidden className="block h-px w-10 bg-sage" />
+            <FadeIn as="li" key={v.title} delay={i * 100} className="value-item">
+              <span aria-hidden className="value-line block h-px w-10 bg-sage" />
               <h2 className="mt-6 text-2xl">{v.title}</h2>
               <p className="mt-3 text-muted">{v.body}</p>
             </FadeIn>
@@ -96,7 +96,7 @@ export default function AboutPage() {
               <h3 className="eyebrow">Opening hours</h3>
               <dl className="mt-4 divide-y divide-line border-y border-line">
                 {hours.map((h) => (
-                  <div key={h.day} className="flex justify-between py-2.5">
+                  <div key={h.day} className="hours-row flex justify-between py-2.5">
                     <dt>{h.day}</dt>
                     <dd className={`tabular-nums ${"closed" in h ? "text-muted" : ""}`}>
                       {"closed" in h ? "Closed" : `${h.open} – ${h.close}`}

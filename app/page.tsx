@@ -40,6 +40,7 @@ export default function HomePage() {
           sizes="100vw"
           className="absolute inset-0 pt-20 md:pt-24"
           imgClassName="hero-push"
+          hover={false}
         />
         {/* Keeps overlaid text legible once real footage replaces the placeholder. */}
         <div aria-hidden className="absolute inset-0 bg-linear-to-t from-[#1e2119]/70 via-[#1e2119]/25 to-transparent" />
@@ -97,9 +98,11 @@ export default function HomePage() {
 
           <ol className="mt-20 grid gap-14 md:mt-28 md:grid-cols-3 md:gap-8">
             {ritual.map((step, i) => (
-              <FadeIn as="li" key={step.figure} delay={i * 160} className={i === 1 ? "md:mt-16" : i === 2 ? "md:mt-32" : ""}>
+              <FadeIn as="li" key={step.figure} delay={i * 160} className={`hover-card ${i === 1 ? "md:mt-16" : i === 2 ? "md:mt-32" : ""}`}>
                 <Photo slot={step.photo} sizes="(min-width: 768px) 33vw, 100vw" className="aspect-[4/5] w-full rounded-lg" />
-                <p className="mt-6 font-display text-4xl text-matcha md:text-5xl">{step.figure}</p>
+                <p className="mt-6 font-display text-4xl text-matcha md:text-5xl">
+                  <span className="ritual-figure">{step.figure}</span>
+                </p>
                 <p className="mt-3 max-w-xs text-muted">{step.caption}</p>
               </FadeIn>
             ))}
@@ -124,11 +127,13 @@ export default function HomePage() {
 
           <ul className="mt-14 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
             {featured.map((item, i) => (
-              <FadeIn as="li" key={item.id} delay={i * 110} className={i % 2 === 1 ? "lg:mt-12" : ""}>
+              <FadeIn as="li" key={item.id} delay={i * 110} className={`hover-card ${i % 2 === 1 ? "lg:mt-12" : ""}`}>
                 <Photo slot={menuPhoto(item)} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="aspect-[3/4] w-full rounded-lg" />
                 <div className="mt-5 flex items-baseline justify-between gap-4">
-                  <h3 className="text-xl">{item.name}</h3>
-                  <p className="shrink-0 tabular-nums text-matcha">{formatPrice(item.price)}</p>
+                  <h3 className="text-xl">
+                    <span className="draw-title [box-decoration-break:clone]">{item.name}</span>
+                  </h3>
+                  <p className="card-meta shrink-0 tabular-nums text-matcha">{formatPrice(item.price)}</p>
                 </div>
                 <p className="mt-2 text-[0.95rem] text-muted">{item.description}</p>
               </FadeIn>
@@ -144,7 +149,7 @@ export default function HomePage() {
         className="on-dark relative isolate overflow-hidden bg-uji py-40 text-cream md:py-56"
       >
         <div aria-hidden className="tea-field-drift absolute -inset-y-12 inset-x-0 -z-10">
-          <Photo slot={photos.teaField} fallback="none" sizes="100vw" className="h-full w-full opacity-40" />
+          <Photo slot={photos.teaField} fallback="none" hover={false} sizes="100vw" className="h-full w-full opacity-40" />
         </div>
         <div aria-hidden className="absolute inset-0 -z-10 bg-uji/55" />
         <FadeIn className="container-page">
@@ -165,7 +170,7 @@ export default function HomePage() {
             <p className="eyebrow">Opening hours</p>
             <dl className="mt-6 divide-y divide-line border-y border-line">
               {groupedHours().map((g) => (
-                <div key={g.days} className="flex justify-between gap-6 py-4 text-lg">
+                <div key={g.days} className="hours-row flex justify-between gap-6 py-4 text-lg">
                   <dt>{g.days}</dt>
                   <dd className={`tabular-nums ${g.time === "Closed" ? "text-muted" : ""}`}>{g.time}</dd>
                 </div>
@@ -190,10 +195,10 @@ export default function HomePage() {
         </div>
 
         <div className="container-page mt-24 md:mt-32">
-          <FadeIn className="on-dark relative overflow-hidden rounded-lg bg-matcha px-6 py-20 text-center text-cream md:px-16 md:py-28">
+          <FadeIn className="cta-panel on-dark relative overflow-hidden rounded-lg bg-matcha px-6 py-20 text-center text-cream md:px-16 md:py-28">
             <svg
               aria-hidden
-              className="pointer-events-none absolute -bottom-16 -left-10 h-72 w-72 text-cream opacity-[0.07]"
+              className="cta-leaf pointer-events-none absolute -bottom-16 -left-10 h-72 w-72 text-cream opacity-[0.07]"
               viewBox="0 0 200 200"
             >
               <path d="M100 10c50 30 70 90 0 180C30 100 50 40 100 10Z" fill="currentColor" />

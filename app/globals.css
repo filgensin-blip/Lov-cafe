@@ -194,10 +194,6 @@ html[data-daypart="afternoon"] {
     text-decoration-color: var(--color-sage);
     text-decoration-thickness: 1px;
     text-underline-offset: 0.25em;
-    transition: text-decoration-color 200ms ease;
-  }
-  .link-underline:hover {
-    text-decoration-color: currentColor;
   }
 
   /* Form fields */
@@ -338,6 +334,172 @@ em.set-word {
   }
   to {
     transform: translateY(40px);
+  }
+}
+
+/* Lenis drives smooth scrolling itself; native smooth-scroll would fight it. */
+html.lenis {
+  scroll-behavior: auto;
+}
+
+/* ---------------------------------------------------------------------------
+   Hover choreography — every interactive surface answers the cursor, gently.
+   Only for real pointers (not touch) and only without reduced motion.
+   Shared easing: things settle, they don't snap.
+--------------------------------------------------------------------------- */
+:root {
+  --ease-settle: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Photos: a slow lean-in, and the grade lifts a touch toward daylight. */
+.photo-frame img {
+  transition:
+    transform 1400ms var(--ease-settle),
+    filter 900ms ease;
+}
+
+/* Buttons: a colour wipe rises from the bottom edge, like tea filling a cup. */
+.btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 550ms var(--ease-settle);
+}
+.btn-primary::before {
+  background: var(--color-matcha-deep);
+}
+.btn-light::before {
+  background: var(--color-foam);
+}
+.btn-outline::before {
+  background: var(--color-matcha);
+}
+.btn-ghost-light::before {
+  background: var(--color-cream);
+}
+
+/* Drawn underline for nav and inline links (sits over the static sage rule). */
+.nav-link,
+.link-underline,
+.draw-title {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: 0% 1px;
+  transition:
+    background-size 600ms var(--ease-settle),
+    color 300ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .photo-frame:hover img,
+  .hover-card:hover .photo-frame img {
+    transform: scale(1.05);
+    filter: saturate(0.98) contrast(0.97) brightness(1.05) sepia(0.03);
+  }
+
+  .btn:not(:disabled):hover::before {
+    transform: scaleY(1);
+  }
+  .btn-primary:hover {
+    background: var(--color-matcha); /* the wipe provides the darker tone */
+  }
+  .btn-light:hover {
+    background: var(--color-cream);
+  }
+  .btn-outline:hover {
+    color: var(--color-cream);
+    border-color: var(--color-matcha);
+  }
+  .btn-ghost-light:hover {
+    color: var(--color-matcha-deep);
+    background: transparent;
+  }
+
+  .nav-link:hover,
+  .link-underline:hover,
+  .hover-card:hover .draw-title {
+    background-position: 0% 100%;
+    background-size: 100% 1px;
+  }
+
+  /* Cards (featured items, ritual steps): title draws, price and figure settle in. */
+  .hover-card .card-meta {
+    transition: transform 600ms var(--ease-settle), color 300ms ease;
+  }
+  .hover-card:hover .card-meta {
+    transform: translateX(4px);
+    color: var(--color-matcha-deep);
+  }
+  .hover-card .ritual-figure {
+    display: inline-block;
+    transition:
+      transform 700ms var(--ease-settle),
+      font-variation-settings 700ms var(--ease-settle);
+  }
+  .hover-card:hover .ritual-figure {
+    transform: translateY(-4px);
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+  }
+
+  /* Menu rows: the name steps forward, the dotted leader inks in. */
+  .menu-row h3,
+  .menu-row .leader,
+  .menu-row .price {
+    transition:
+      transform 500ms var(--ease-settle),
+      border-color 400ms ease,
+      color 300ms ease;
+  }
+  .menu-row:hover h3 {
+    transform: translateX(6px);
+    color: var(--color-matcha-deep);
+  }
+  .menu-row:hover .leader {
+    border-color: var(--color-matcha);
+  }
+  .menu-row:hover .price {
+    color: var(--color-matcha-deep);
+  }
+
+  /* Hours rows: the day nudges in. */
+  .hours-row dt {
+    transition: transform 500ms var(--ease-settle);
+  }
+  .hours-row:hover dt {
+    transform: translateX(6px);
+  }
+
+  /* Wordmark: the letters breathe out a little. */
+  .logo-mark {
+    transition: letter-spacing 700ms var(--ease-settle);
+  }
+  a:hover > .logo-mark {
+    letter-spacing: 0.2em;
+  }
+
+  /* About values: the sage rule grows. */
+  .value-item .value-line {
+    transition: width 700ms var(--ease-settle);
+  }
+  .value-item:hover .value-line {
+    width: 5rem;
+  }
+
+  /* Closing CTA: the leaf drifts when you rest on the panel. */
+  .cta-leaf {
+    transition: transform 1600ms var(--ease-settle);
+  }
+  .cta-panel:hover .cta-leaf {
+    transform: rotate(-10deg) translate(10px, -14px);
   }
 }
 
