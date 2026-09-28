@@ -58,7 +58,7 @@ export default function MenuPage() {
 
               <ul className="space-y-8 md:col-span-8">
                 {category.items.map((item) => (
-                  <li key={item.id} data-preview-name={category.category === "Extras" ? undefined : item.name} data-preview-image={hasPhoto(menuPhoto(item)) ? menuPhoto(item).src : undefined}>
+                  <li key={item.id} data-preview-name={hasPhoto(menuPhoto(item)) ? item.name : undefined} data-preview-image={hasPhoto(menuPhoto(item)) ? menuPhoto(item).src : undefined}>
                     <div className="flex items-baseline gap-3">
                       <h3 className="font-sans text-lg font-medium">{item.name}</h3>
                       <span aria-hidden className="mb-1 flex-1 border-b border-dotted border-line-strong" />

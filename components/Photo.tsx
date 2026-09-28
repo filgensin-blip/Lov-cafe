@@ -25,6 +25,7 @@ export function Photo({
   tone,
   labelPosition,
   imgClassName = "",
+  fallback = "placeholder",
 }: {
   slot: PhotoSlot;
   className?: string;
@@ -33,12 +34,17 @@ export function Photo({
   tone?: "sage" | "cream" | "matcha";
   labelPosition?: "top" | "bottom";
   imgClassName?: string;
+  /** "none" renders nothing when the file is missing (for decorative backdrops). */
+  fallback?: "placeholder" | "none";
 }) {
   if (!hasPhoto(slot)) {
+    if (fallback === "none") return null;
     return <PhotoPlaceholder label={slot.brief} tone={tone} labelPosition={labelPosition} className={className} />;
   }
+  // next/image `fill` needs a positioned parent; keep a caller's absolute/fixed.
+  const position = /\b(absolute|fixed)\b/.test(className) ? "" : "relative";
   return (
-    <div className={`relative overflow-hidden bg-cream-2 ${className}`}>
+    <div className={`${position} overflow-hidden bg-cream-2 ${className}`}>
       <Image
         src={slot.src}
         alt={slot.alt}

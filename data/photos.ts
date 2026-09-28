@@ -10,6 +10,10 @@
 // natural window light, shot 08:00–10:00, hands in frame, shallow depth of
 // field, warm and slightly lifted grade, no faces looking at camera.
 // Recommended size: 2400px on the long edge, JPG quality ~82.
+//
+// Current files are licensed Unsplash stand-ins (see public/photos/README.md)
+// until the cafe's own shoot replaces them. Alt text describes the file that
+// is actually there — update it when a photo changes.
 
 export type PhotoSlot = {
   src: string;
@@ -21,22 +25,22 @@ export type PhotoSlot = {
 export const photos = {
   hero: {
     src: "/photos/hero.jpg",
-    alt: "Morning light falling across an oak table with a bowl of matcha",
+    alt: "A small round table by a tall window, set with a French press and cups among plants",
     brief: "Hero — morning light across an oak table, steam rising from a matcha bowl. Wide, landscape, lots of quiet space top-left for the headline.",
   },
   ritualSift: {
     src: "/photos/ritual-sift.jpg",
-    alt: "Bright green matcha powder being sifted into a ceramic bowl",
+    alt: "Bright green matcha powder and a small spoon on dark wood",
     brief: "Sifting matcha into a bowl — top-down, fine sieve, a haze of green powder.",
   },
   ritualPour: {
     src: "/photos/ritual-pour.jpg",
-    alt: "Hot water poured from a kettle into a matcha bowl",
+    alt: "Hot water poured from a gooseneck kettle, steam in the light",
     brief: "Pouring water from a kettle — 3/4 angle, a thin stream, steam catching the light.",
   },
   ritualWhisk: {
     src: "/photos/ritual-whisk.jpg",
-    alt: "A bamboo whisk moving through glossy matcha foam",
+    alt: "A matcha latte with leaf-shaped latte art in a white cup",
     brief: "Bamboo whisk, glossy foam — close, slight motion blur on the whisk.",
   },
   teaField: {
@@ -46,12 +50,12 @@ export const photos = {
   },
   aboutPortrait: {
     src: "/photos/about-bar.jpg",
-    alt: "Hands whisking matcha at the cafe's wooden bar",
+    alt: "A calm cafe room with long wooden tables",
     brief: "Hands whisking matcha at the bar — portrait 4:5, pale wood, soft window light.",
   },
   interior: {
     src: "/photos/interior.jpg",
-    alt: "The cafe's window seat with oak tables in soft morning light",
+    alt: "A bright cafe counter with pendant lights, open shelves and an espresso machine",
     brief: "Interior — window seat, oak tables, linen, nobody rushing. Portrait 4:5.",
   },
 } satisfies Record<string, PhotoSlot>;
@@ -62,7 +66,7 @@ export type PhotoKey = keyof typeof photos;
 export function menuPhoto(item: { id: string; name: string; description: string }): PhotoSlot {
   return {
     src: `/photos/menu/${item.id}.jpg`,
-    alt: `${item.name}: ${item.description}`,
+    alt: item.name,
     brief: item.name,
   };
 }

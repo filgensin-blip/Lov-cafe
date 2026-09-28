@@ -375,7 +375,7 @@ em.set-word {
   pointer-events: none;
 }
 html[data-daypart="closed"] .after-hours-dim {
-  opacity: 0.82;
+  opacity: 0.6;
 }
 
 /* ---------------------------------------------------------------------------

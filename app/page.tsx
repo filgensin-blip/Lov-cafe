@@ -43,6 +43,10 @@ export default function HomePage() {
         />
         {/* Keeps overlaid text legible once real footage replaces the placeholder. */}
         <div aria-hidden className="absolute inset-0 bg-linear-to-t from-[#1e2119]/70 via-[#1e2119]/25 to-transparent" />
+        {/* Side shade under the headline, for bright daytime photos. */}
+        <div aria-hidden className="absolute inset-0 bg-linear-to-r from-[#1e2119]/55 via-[#1e2119]/20 to-transparent" />
+        {/* Top shade keeps the transparent nav legible over a bright photo. */}
+        <div aria-hidden className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-[#1e2119]/50 to-transparent" />
         <div aria-hidden className="after-hours-dim" />
         <div aria-hidden className="hero-veil" />
 
@@ -140,7 +144,7 @@ export default function HomePage() {
         className="on-dark relative isolate overflow-hidden bg-uji py-40 text-cream md:py-56"
       >
         <div aria-hidden className="tea-field-drift absolute -inset-y-12 inset-x-0 -z-10">
-          <Photo slot={photos.teaField} tone="matcha" sizes="100vw" className="h-full w-full opacity-40" />
+          <Photo slot={photos.teaField} fallback="none" sizes="100vw" className="h-full w-full opacity-40" />
         </div>
         <div aria-hidden className="absolute inset-0 -z-10 bg-uji/55" />
         <FadeIn className="container-page">
