@@ -65,6 +65,27 @@ Validation rules: date not in the past, not a closed day, at most 90 days ahead;
 
 To use SMTP instead of Resend, reimplement `sendEmail()` in `lib/email.ts` with Nodemailer; templates are provider-agnostic.
 
+## Creative direction (v2)
+
+See `docs/creative-direction.md`. Built so far, all without new photography:
+
+- Variable Fraunces (`opsz`, `SOFT`, `WONK` axes), 17px body, static paper grain
+- **Living palette** — `components/DaypartSync.tsx` + `lib/daypart.ts` warm the cream before 10:00, cool it in the afternoon, and dim the hero after hours ("We're asleep. Back tomorrow at 08:00." / "Book for tomorrow morning")
+- **First light** — veil lift and word-by-word headline set-in on the home hero
+- Home page as five chapters of a morning, with a running clock (`components/TimeRail.tsx`, xl screens)
+- **The ritual** as a still triptych (2g. / 80°C. / Thirty seconds.) — the reduced-motion version of the whisk sequence
+- **The tea field** — dark full-bleed chapter with a CSS scroll-driven drift
+- **Paper menu** with desktop hover previews (`components/MenuPreview.tsx`; add `image` to items in `data/menu.ts`)
+- **Booking ledger** — ruled-line form and a "LØV · reserved" stamp on a paper ticket
+
+Still needs the morning shoot: the hero film loop and the 48-frame scroll-scrubbed whisk sequence.
+
+## Deploying (Netlify)
+
+`netlify.toml` is included; Netlify's Next.js runtime handles the pages and `/api/booking`.
+Set `RESEND_API_KEY`, `BOOKING_FROM_EMAIL` and `CAFE_NOTIFICATION_EMAIL` under
+Site configuration → Environment variables.
+
 ## Accessibility
 
 - WCAG AA contrast is verified by `npm run check:contrast`. The brief's muted grey `#6B6E60` came out at 4.4:1 on the secondary cream, just under AA, so muted text uses `#5E6155`.
