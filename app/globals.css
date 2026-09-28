@@ -341,6 +341,30 @@ em.set-word {
   }
 }
 
+/* House grade: pulls photos from different shoots (or stock stand-ins)
+   toward one warm, slightly lifted, softly desaturated look. */
+.graded {
+  filter: saturate(0.9) contrast(0.96) brightness(1.02) sepia(0.06);
+}
+
+/* Hero: a very slow push-in, like a camera easing toward the table. */
+.hero-push {
+  animation: hero-push 16s cubic-bezier(0.2, 0.6, 0.2, 1) both;
+}
+@keyframes hero-push {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-push {
+    animation: none;
+  }
+}
+
 /* Signature moment ⑥ — after hours, the room dims. */
 .after-hours-dim {
   position: absolute;

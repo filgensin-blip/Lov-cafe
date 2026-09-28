@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
 import { MenuPreview } from "@/components/MenuPreview";
+import { hasPhoto } from "@/components/Photo";
+import { menuPhoto } from "@/data/photos";
 import { formatPrice, menu, slugify, tagLabels } from "@/data/menu";
 
 export const metadata: Metadata = {
@@ -56,7 +58,7 @@ export default function MenuPage() {
 
               <ul className="space-y-8 md:col-span-8">
                 {category.items.map((item) => (
-                  <li key={item.id} data-preview-name={category.category === "Extras" ? undefined : item.name} data-preview-image={item.image}>
+                  <li key={item.id} data-preview-name={category.category === "Extras" ? undefined : item.name} data-preview-image={hasPhoto(menuPhoto(item)) ? menuPhoto(item).src : undefined}>
                     <div className="flex items-baseline gap-3">
                       <h3 className="font-sans text-lg font-medium">{item.name}</h3>
                       <span aria-hidden className="mb-1 flex-1 border-b border-dotted border-line-strong" />

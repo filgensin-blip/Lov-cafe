@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
 import { HeroBookButton, HeroStatus } from "@/components/HeroStatus";
-import { PhotoPlaceholder } from "@/components/PhotoPlaceholder";
+import { Photo } from "@/components/Photo";
+import { menuPhoto, photos } from "@/data/photos";
 import { TimeRail } from "@/components/TimeRail";
 import { formatPrice, getFeaturedItems } from "@/data/menu";
 import { groupedHours } from "@/data/hours";
@@ -11,9 +12,9 @@ import { siteInfo } from "@/data/site-info";
 // Each chapter's data-chapter-time drives the running clock in <TimeRail>.
 
 const ritual = [
-  { figure: "2g.", caption: "Ceremonial matcha, sifted so there isn't a single lump.", shot: "Sifting matcha into a bowl" },
-  { figure: "80°C.", caption: "Never boiling. Hot enough to open it up, cool enough to keep it sweet.", shot: "Pouring water from a kettle" },
-  { figure: "Thirty seconds.", caption: "A quick zig-zag with a bamboo whisk until the foam turns fine and glossy.", shot: "Bamboo whisk, glossy foam" },
+  { figure: "2g.", caption: "Ceremonial matcha, sifted so there isn't a single lump.", photo: photos.ritualSift },
+  { figure: "80°C.", caption: "Never boiling. Hot enough to open it up, cool enough to keep it sweet.", photo: photos.ritualPour },
+  { figure: "Thirty seconds.", caption: "A quick zig-zag with a bamboo whisk until the foam turns fine and glossy.", photo: photos.ritualWhisk },
 ];
 
 const headline = ["Matcha,", "slow", "mornings,"];
@@ -31,11 +32,14 @@ export default function HomePage() {
         data-chapter-label="First light"
         className="on-dark relative flex min-h-[92svh] items-end overflow-hidden bg-matcha text-cream"
       >
-        <PhotoPlaceholder
-          label="Film loop — morning light moving across an oak table, steam rising from a bowl"
+        <Photo
+          slot={photos.hero}
           tone="matcha"
           labelPosition="top"
+          priority
+          sizes="100vw"
           className="absolute inset-0 pt-20 md:pt-24"
+          imgClassName="hero-push"
         />
         {/* Keeps overlaid text legible once real footage replaces the placeholder. */}
         <div aria-hidden className="absolute inset-0 bg-linear-to-t from-[#1e2119]/70 via-[#1e2119]/25 to-transparent" />
@@ -90,7 +94,7 @@ export default function HomePage() {
           <ol className="mt-20 grid gap-14 md:mt-28 md:grid-cols-3 md:gap-8">
             {ritual.map((step, i) => (
               <FadeIn as="li" key={step.figure} delay={i * 160} className={i === 1 ? "md:mt-16" : i === 2 ? "md:mt-32" : ""}>
-                <PhotoPlaceholder label={step.shot} className="aspect-[4/5] w-full rounded-lg" />
+                <Photo slot={step.photo} sizes="(min-width: 768px) 33vw, 100vw" className="aspect-[4/5] w-full rounded-lg" />
                 <p className="mt-6 font-display text-4xl text-matcha md:text-5xl">{step.figure}</p>
                 <p className="mt-3 max-w-xs text-muted">{step.caption}</p>
               </FadeIn>
@@ -117,7 +121,7 @@ export default function HomePage() {
           <ul className="mt-14 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
             {featured.map((item, i) => (
               <FadeIn as="li" key={item.id} delay={i * 110} className={i % 2 === 1 ? "lg:mt-12" : ""}>
-                <PhotoPlaceholder label={item.name} className="aspect-[3/4] w-full rounded-lg" />
+                <Photo slot={menuPhoto(item)} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="aspect-[3/4] w-full rounded-lg" />
                 <div className="mt-5 flex items-baseline justify-between gap-4">
                   <h3 className="text-xl">{item.name}</h3>
                   <p className="shrink-0 tabular-nums text-matcha">{formatPrice(item.price)}</p>
@@ -136,11 +140,7 @@ export default function HomePage() {
         className="on-dark relative isolate overflow-hidden bg-uji py-40 text-cream md:py-56"
       >
         <div aria-hidden className="tea-field-drift absolute -inset-y-12 inset-x-0 -z-10">
-          <PhotoPlaceholder
-            label="Shaded tea rows in morning mist"
-            tone="matcha"
-            className="h-full w-full opacity-40"
-          />
+          <Photo slot={photos.teaField} tone="matcha" sizes="100vw" className="h-full w-full opacity-40" />
         </div>
         <div aria-hidden className="absolute inset-0 -z-10 bg-uji/55" />
         <FadeIn className="container-page">

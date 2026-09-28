@@ -83,7 +83,7 @@ export function MenuPreview() {
         {item &&
           (item.image ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={item.image} alt="" className="aspect-[4/5] w-full rounded-md object-cover" />
+            <img src={item.image} alt="" className="graded aspect-[4/5] w-full rounded-md object-cover" />
           ) : (
             <PhotoPlaceholder label={item.name} className="aspect-[4/5] w-full rounded-md" />
           ))}

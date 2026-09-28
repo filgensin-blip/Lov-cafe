@@ -11,8 +11,6 @@ export type MenuItem = {
   price: number;
   /** Optional dietary note shown after the description, e.g. "vg" for vegan. */
   tags?: ("vg" | "v" | "gf")[];
-  /** Optional photo path (e.g. "/photos/cardamom-bun.jpg") for the menu hover preview. */
-  image?: string;
 };
 
 export type MenuCategory = {

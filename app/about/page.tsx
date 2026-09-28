@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
-import { PhotoPlaceholder } from "@/components/PhotoPlaceholder";
+import { Photo } from "@/components/Photo";
+import { photos } from "@/data/photos";
 import { hours } from "@/data/hours";
 import { mapEmbedUrl, mapLinkUrl, siteInfo } from "@/data/site-info";
 
@@ -48,7 +49,7 @@ export default function AboutPage() {
           </div>
         </FadeIn>
         <FadeIn delay={120} className="md:col-span-5 md:col-start-8">
-          <PhotoPlaceholder label="Hands whisking matcha at the bar" className="aspect-[4/5] w-full rounded-lg" />
+          <Photo slot={photos.aboutPortrait} sizes="(min-width: 768px) 40vw, 100vw" className="aspect-[4/5] w-full rounded-lg" />
         </FadeIn>
       </section>
 
