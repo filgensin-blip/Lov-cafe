@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { BookingForm } from "@/components/BookingForm";
 import { FadeIn } from "@/components/FadeIn";
+import { Photo } from "@/components/Photo";
+import { photos } from "@/data/photos";
 import { groupedHours } from "@/data/hours";
 import { formatAddress, siteInfo } from "@/data/site-info";
 
@@ -24,6 +26,7 @@ export default function BookPage() {
           </p>
 
           <div className="mt-12 hidden space-y-8 lg:block">
+            <Photo slot={photos.interior} sizes="35vw" className="aspect-[4/3] w-full max-w-md rounded-lg" />
             <div>
               <h2 className="eyebrow">Hours</h2>
               <dl className="mt-3 space-y-1">

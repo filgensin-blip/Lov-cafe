@@ -57,7 +57,7 @@ export function Header() {
           ))}
           <Link
             href="/book"
-            className={`btn min-h-10 px-5 py-2${transparent ? "btn-light" : "btn-primary"}`}
+            className={`btn min-h-10 px-5 py-2 ${transparent ? "btn-light" : "btn-primary"}`}
             aria-current={pathname === "/book" ? "page" : undefined}
           >
             Book a table
@@ -121,9 +121,7 @@ function NavLink({ href, label, active }: { href: string; label: string; active:
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
-      className={`text-[0.975rem] underline-offset-[0.4em] decoration-1 hover:underline ${
-        active ? "underline decoration-current" : "decoration-sage"
-      }`}
+      className={`nav-link pb-0.5 text-[0.975rem] ${active ? "underline decoration-1 underline-offset-[0.4em]" : ""}`}
     >
       {label}
     </Link>

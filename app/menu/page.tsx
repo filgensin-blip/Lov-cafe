@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
+import { MenuPreview } from "@/components/MenuPreview";
+import { hasPhoto } from "@/components/Photo";
+import { menuPhoto } from "@/data/photos";
 import { formatPrice, menu, slugify, tagLabels } from "@/data/menu";
 
 export const metadata: Metadata = {
@@ -11,6 +14,7 @@ export const metadata: Metadata = {
 export default function MenuPage() {
   return (
     <div className="pb-24 pt-32 md:pb-32 md:pt-44">
+      <MenuPreview />
       <div className="container-page">
         <FadeIn className="max-w-2xl">
           <p className="eyebrow">Menu</p>
@@ -36,25 +40,29 @@ export default function MenuPage() {
           </ul>
         </nav>
 
-        <div className="mt-6">
+        {/* The menu as a printed card: foam paper, ruled sections, dotted leaders. */}
+        <div className="paper mt-10 px-5 sm:px-8 md:px-14">
           {menu.map((category) => (
             <FadeIn
               as="section"
               key={category.category}
-              className="grid scroll-mt-28 gap-6 border-b border-line py-14 md:grid-cols-12 md:gap-10 md:py-20"
+              className="grid scroll-mt-28 gap-6 border-b border-line py-14 last:border-b-0 md:grid-cols-12 md:gap-10 md:py-20"
             >
               <header className="md:col-span-4" id={slugify(category.category)}>
-                <h2 className="text-3xl md:text-4xl">{category.category}</h2>
+                <p aria-hidden className="font-display text-sm tabular-nums text-muted">
+                  {String(menu.indexOf(category) + 1).padStart(2, "0")}
+                </p>
+                <h2 className="mt-2 text-3xl md:text-4xl">{category.category}</h2>
                 {category.note && <p className="mt-3 text-muted">{category.note}</p>}
               </header>
 
               <ul className="space-y-8 md:col-span-8">
                 {category.items.map((item) => (
-                  <li key={item.id}>
+                  <li key={item.id} className="menu-row" data-preview-name={hasPhoto(menuPhoto(item)) ? item.name : undefined} data-preview-image={hasPhoto(menuPhoto(item)) ? menuPhoto(item).src : undefined}>
                     <div className="flex items-baseline gap-3">
                       <h3 className="font-sans text-lg font-medium">{item.name}</h3>
-                      <span aria-hidden className="mb-1 flex-1 border-b border-dotted border-line-strong" />
-                      <p className="shrink-0 tabular-nums text-matcha">
+                      <span aria-hidden className="leader mb-1 flex-1 border-b border-dotted border-line-strong" />
+                      <p className="price shrink-0 tabular-nums text-matcha">
                         <span className="sr-only">Price: </span>
                         {formatPrice(item.price)}
                       </p>

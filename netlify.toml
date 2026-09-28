@@ -1,0 +1,14 @@
+# Netlify detects Next.js and applies its Next.js runtime automatically
+# (App Router pages + the /api/booking route as a serverless function).
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# Booking email needs these set in Netlify → Site configuration → Environment
+# variables (never commit them): RESEND_API_KEY, BOOKING_FROM_EMAIL,
+# CAFE_NOTIFICATION_EMAIL. Without them bookings are still accepted and
+# logged in the function logs, and guests are asked to call to confirm.

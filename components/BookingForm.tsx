@@ -26,7 +26,15 @@ const FIELD_ORDER: BookingField[] = ["name", "email", "phone", "date", "time", "
 type Status =
   | { kind: "idle" }
   | { kind: "submitting" }
-  | { kind: "success"; name: string; email: string; date: string; time: string; emailSent: boolean }
+  | {
+      kind: "success";
+      name: string;
+      email: string;
+      date: string;
+      time: string;
+      partySize: number;
+      emailSent: boolean;
+    }
   | { kind: "failed" };
 
 export function BookingForm() {
@@ -102,17 +110,37 @@ export function BookingForm() {
 
   if (status.kind === "success") {
     const firstName = status.name.split(/\s+/)[0];
+    // Signature moment ⑤ — the "LØV · reserved" stamp presses onto a paper ticket.
     return (
-      <div className="rounded-lg border border-line bg-cream-2 p-8 md:p-10" role="status">
-        <h2 ref={resultRef} tabIndex={-1} className="text-3xl md:text-4xl">
-          Thank you, {firstName}.
-        </h2>
+      <div role="status">
+        <div className="paper relative overflow-hidden">
+          <div className="p-7 md:p-10">
+            <p className="eyebrow">Reservation</p>
+            <h2 ref={resultRef} tabIndex={-1} className="mt-3 pr-24 text-3xl md:text-4xl">
+              Thank you, <em className="italic text-matcha">{firstName}</em>.
+            </h2>
+          </div>
+          <dl className="ticket-perforation grid grid-cols-[2fr_1fr_1fr] gap-4 px-7 py-6 md:px-10">
+            {[
+              ["Date", formatBookingDate(status.date).replace(/ \d{4}$/, "")],
+              ["Time", status.time],
+              ["Guests", String(status.partySize)],
+            ].map(([k, v]) => (
+              <div key={k}>
+                <dt className="text-sm text-muted">{k}</dt>
+                <dd className="mt-1 font-display text-xl tabular-nums leading-tight md:text-2xl">{v}</dd>
+              </div>
+            ))}
+          </dl>
+          <Stamp className="stamp absolute right-4 top-4 h-28 w-28 text-matcha md:right-8 md:top-6 md:h-32 md:w-32" />
+        </div>
+
         {status.emailSent ? (
-          <p className="mt-4 text-lg">
+          <p className="mt-6 text-lg">
             We&rsquo;ve sent a confirmation to <strong className="font-medium">{status.email}</strong>.
           </p>
         ) : (
-          <p className="mt-4 text-lg">
+          <p className="mt-6 text-lg">
             We&rsquo;ve received your booking, but our confirmation email didn&rsquo;t go through. To be
             safe, please call us on{" "}
             <a className="link-underline text-matcha" href={`tel:${siteInfo.phoneHref}`}>
@@ -121,9 +149,7 @@ export function BookingForm() {
             to confirm.
           </p>
         )}
-        <p className="mt-6 font-display text-xl italic text-matcha">
-          {formatBookingDate(status.date)} at {status.time}. We look forward to seeing you.
-        </p>
+        <p className="mt-4 font-display text-xl italic text-matcha">We look forward to seeing you.</p>
         <button
           type="button"
           className="btn btn-outline mt-8"
@@ -143,7 +169,7 @@ export function BookingForm() {
     undefined;
 
   return (
-    <form ref={formRef} onSubmit={onSubmit} noValidate className="space-y-7">
+    <form ref={formRef} onSubmit={onSubmit} noValidate className="ledger paper space-y-8 p-6 sm:p-8 md:p-10">
       {status.kind === "failed" && (
         <div className="rounded-lg border border-[#8a3425]/30 bg-[#f6e9e3] p-5" role="alert">
           <h2 ref={resultRef} tabIndex={-1} className="font-sans text-base font-medium">
@@ -330,6 +356,34 @@ export function BookingForm() {
         </p>
       </div>
     </form>
+  );
+}
+
+/** Circular rubber stamp: "LØV · RESERVED · MAASTRICHT ·" around the Ø leaf mark. */
+function Stamp({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 120 120" aria-hidden className={className}>
+      <defs>
+        <path id="stamp-ring" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" />
+      </defs>
+      <g fill="none" stroke="currentColor" opacity="0.85">
+        <circle cx="60" cy="60" r="56" strokeWidth="2" />
+        <circle cx="60" cy="60" r="34" strokeWidth="1" />
+      </g>
+      <text fill="currentColor" fontSize="10.5" letterSpacing="2.6" fontFamily="var(--font-work-sans), sans-serif">
+        <textPath href="#stamp-ring">LØV · RESERVED · MAASTRICHT ·</textPath>
+      </text>
+      <text
+        x="60"
+        y="72"
+        textAnchor="middle"
+        fill="currentColor"
+        fontSize="34"
+        fontFamily="var(--font-fraunces), serif"
+      >
+        Ø
+      </text>
+    </svg>
   );
 }
 

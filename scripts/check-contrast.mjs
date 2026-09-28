@@ -23,6 +23,10 @@ const C = {
   matchaDeep: "#3B4A2E",
   error: "#8A3425",
   errorBg: "#F6E9E3",
+  foam: "#E4E8D6",
+  uji: "#27301F",
+  creamMorning: "#F8F4EA",
+  creamAfternoon: "#F5F5EF",
 };
 
 // [label, foreground, background, minimum ratio]
@@ -39,6 +43,17 @@ const pairs = [
   ["matcha-deep on cream (light button)", C.matchaDeep, C.cream, 4.5],
   ["error on cream", C.error, C.cream, 4.5],
   ["ink on error bg", C.ink, C.errorBg, 4.5],
+  // v2 creative-direction tones
+  ["ink on foam (menu & booking paper)", C.ink, C.foam, 4.5],
+  ["muted on foam", C.muted, C.foam, 4.5],
+  ["matcha on foam", C.matcha, C.foam, 4.5],
+  ["error on foam", C.error, C.foam, 4.5],
+  ["cream on uji (tea field, after hours)", C.cream, C.uji, 4.5],
+  // living palette variants of cream
+  ["muted on morning cream", C.muted, C.creamMorning, 4.5],
+  ["matcha on morning cream", C.matcha, C.creamMorning, 4.5],
+  ["muted on afternoon cream", C.muted, C.creamAfternoon, 4.5],
+  ["matcha on afternoon cream", C.matcha, C.creamAfternoon, 4.5],
 ];
 
 let failed = false;
